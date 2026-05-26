@@ -44,8 +44,8 @@ try {
         "merchant_ref", "ORDER-12345",
         "amount", 5000,
         "currency", "XOF",
-        "return_url", "https://mysite.com/success",
-        "cancel_url", "https://mysite.com/cancel",
+        "success_url", "https://mysite.com/success",
+        "failed_url", "https://mysite.com/failed",
         "callback_url", "https://mysite.com/webhook"
     ));
 

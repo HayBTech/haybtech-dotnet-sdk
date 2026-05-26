@@ -25,7 +25,7 @@ public class HayBTechClient {
     public final Webhooks webhooks;
 
     public HayBTechClient(String secretKey) {
-        this(secretKey, "https://api.haybtech.com/v1");
+        this(secretKey, "https://app.haybtech.com/v1");
     }
 
     public HayBTechClient(String secretKey, String baseUrl) {

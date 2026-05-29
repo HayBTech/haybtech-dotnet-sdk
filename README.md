@@ -8,6 +8,32 @@ Official Java SDK for the HayBTech Payment Gateway API -- mobile payments across
 
 ---
 
+## Intégration par IA (Prompt pour Marchands)
+
+Si vous utilisez un assistant IA (comme Cursor, GitHub Copilot, ChatGPT, Claude, etc.), vous pouvez copier-coller le prompt suivant pour intégrer ce SDK de A à Z dans votre projet :
+
+```text
+Agis en tant qu'expert en développement Java avec Spring Boot. Je souhaite intégrer le SDK Java officiel de HayBTech (`sn.haybtech:haybtech-sdk`) pour accepter des paiements mobiles (Wave, Orange Money, etc.) sur mon site de A à Z.
+
+Voici ma stack technique actuelle :
+- Persistance : [ex: Spring Data JPA avec PostgreSQL, Hibernate]
+- Modèle de commande : [décrivez brièvement votre entité Order]
+
+Tâches à accomplir dans le code généré :
+1. **Configuration** : Configurer `HayBTechClient` comme un Bean Spring en injectant la clé d'API depuis `application.properties` ou `application.yml`.
+2. **Checkout Controller** : Créer un `@RestController` avec un endpoint `/api/checkout`. Il doit récupérer les données de la commande, instancier la requête avec `client.payments.create(...)` en lui passant la référence, le montant, la devise (XOF), et les URLs de redirection (success_url, failed_url, callback_url), et retourner l'URL de paiement.
+3. **Webhook Controller** : Créer un endpoint POST `/api/webhook` acceptant les notifications de paiement. Il doit :
+   - Accepter le payload brut (`@RequestBody String payload`) et le header `X-HayBTech-Signature` (ou `X-HayB-Signature`).
+   - Utiliser `Webhook.constructEvent(payload, signature, secret)` pour s'assurer que le message provient bien de HayBTech.
+   - Traiter de manière idempotente les statuts `payment.success` (pour marquer la commande comme payée) et `payment.failed` (pour marquer comme échouée) en base de données.
+   - Renvoyer un `ResponseEntity.ok("OK")`.
+4. **Gestion des Erreurs** : Mettre en place un `@ControllerAdvice` ou des blocs catch locaux pour intercepter les exceptions d'API et retourner les statuts HTTP adéquats sans divulguer d'informations système sensibles.
+
+Génère un code propre, utilisant les standards Java modernes, entièrement commenté et prêt à être intégré.
+```
+
+---
+
 ## Installation
 
 ### Maven
@@ -158,6 +184,5 @@ This SDK is built for **Maximum Security**:
 
 - `client.payments` -- Create, retrieve, list, and verify transactions.
 
----
-
 MIT License
+
